@@ -1,3 +1,5 @@
+#This file contains all codes for article titled: Spatial isolation slows biodiversity recovery more than frequent recultivation in post-agricultural tropical savannahs
+
 #Contents
 
 #1. Importing old-growth savannah data
@@ -7,6 +9,8 @@
 #5. Figure 3: Diversity metrics vs Distance to nearest remnant savanna (OG) patch
 #6. Figure 4: PCA Habitat and Soil
 #7. Figure 5: Future prediction framework
+
+#8. Table 1: Interaction terms table
 
 library(ggplot2)
 library(dplyr)
@@ -22,9 +26,13 @@ library(stargazer)
 options(scipen=9999)
 set.seed(1)
 
+#set your working directory where all data files are stored
+
+#setwd()
+
 #1. Importing old-growth savannah data
 
-data_OG <- read.csv("D:/work stuff/ATBC/Manuscript Submission/Fallow_recovery_project/richness_cover_OG.csv", header = TRUE) #import old-growth (OG) data set
+data_OG <- read.csv("richness_cover_OG.csv", header = TRUE) #import old-growth (OG) data set
 str(data_OG) #check data
 head(data_OG)
 total_richness_og <- data_OG$Total.Richness #specify all herbaceous richness y variables for OG box plot
@@ -50,7 +58,7 @@ meanNonNativeCover <- mean(non.native_cover_og)
 
 #2. Importing fallow data
 
-data_fallow <- read.csv("D:/work stuff/ATBC//Manuscript Submission/Fallow_recovery_project/richness_cover_fallow.csv", header = TRUE) #import fallow data set: only contains fallow sites data
+data_fallow <- read.csv("richness_cover_fallow.csv", header = TRUE) #import fallow data set: only contains fallow sites data
 data_fallow$age <- as.numeric(data_fallow$age)
 data_fallow$distance <- as.numeric(data_fallow$distance)
 str(data_fallow) #check data
@@ -70,7 +78,7 @@ non.native_cover_fallow <- data_fallow$Non.native.Cover
 
 #3. Community Dissimilarity import
 
-dissimilarity_data <- read.csv("D:/work stuff/ATBC//Manuscript Submission/Fallow_recovery_project/DissimiData_no_UI.csv")
+dissimilarity_data <- read.csv("DissimiData_no_UI.csv")
 
 #name variables 
 dissim_fallow <- dissimilarity_data$dissimilarity_fallow
@@ -359,7 +367,7 @@ Panel1
 
 ggsave(filename = "Figure 2.tiff", #export the panel
        plot = Panel1,
-       path = "D:/work stuff/ATBC/Manuscript Submission",
+       path = "your folder",
        width = 21, height = 30, units = "cm", dpi = 300)
 
 ######################################################################################################################################################### 
@@ -569,7 +577,7 @@ Panel2
 
 ggsave(filename = "Figure 3.tiff", #export the panel
        plot = Panel2,
-       path = "D:/work stuff/ATBC/Manuscript Submission",
+       path = "your folder",
        width = 21, height = 30, units = "cm", dpi = 300)
 
 ####################################################################################################################################################################################
@@ -578,7 +586,7 @@ ggsave(filename = "Figure 3.tiff", #export the panel
 
 #6.1 Soil PCA
 
-soil_data <- read.csv("D:/work stuff/ATBC//Manuscript Submission/Fallow_recovery_project/soil_PCA_master.csv", header = TRUE, row.names = 1)
+soil_data <- read.csv("soil_PCA_master.csv", header = TRUE, row.names = 1)
 str(soil_data)
 
 soil_data$landuse <- as.factor(soil_data$landuse)
@@ -680,7 +688,7 @@ soil_PCA <- ggord(soilPCAout, soil_data$landuse, axes = c("1", "2"), cols = c("g
 #6.2 Habitat PCA
 
 # read data. The header and row.names argument automatically removes them from the frame!:
-data_habitat <- read.csv("D:/work stuff/ATBC//Manuscript Submission/Fallow_recovery_project/habitat variables.csv", header=TRUE, row.names=1)
+data_habitat <- read.csv("habitat variables.csv", header=TRUE, row.names=1)
 head(data_habitat)
 
 #first subset the habitat variables from the categorical landuse that will be used to plot later:
@@ -774,7 +782,7 @@ habitat_variables_PCA <- ggord(PCAhabitatout, data_habitat$landuse, axes = c("1"
 #6.3 Linear models for soil and habitat variables PC1, PC2 and native richness and native cover
 
 #import dataset after manually adding landuse, age, distance and five PC scores each for soil and habitat variables
-PCA_scores_df <- read.csv("D:/work stuff/ATBC//Manuscript Submission/Fallow_recovery_project/PCA scores for analysis.csv") 
+PCA_scores_df <- read.csv("PCA scores for analysis.csv") 
 
 PCA_scores_df_fallows <- subset(PCA_scores_df, landuse == "fallow") #subset dataset to only include fallows
 str(PCA_scores_df_fallows) #check
@@ -1007,7 +1015,7 @@ Habitat_combined <- habitat_variables_PCA /
 ggsave(filename = "Figure 4a.tiff",
        plot = Habitat_combined,
        scale = 1.15,
-       path = "D:/work stuff/ATBC/Manuscript Submission",
+       path = "your folder",
        width = 15, height = 20,
        units = "cm", dpi = 300)
 
@@ -1024,7 +1032,7 @@ Soil_combined <- soil_PCA /
 ggsave(filename = "Figure 4b.tiff",
        plot = Soil_combined,
        scale = 1.15,
-       path = "D:/work stuff/ATBC/Manuscript Submission",
+       path = "your folder",
        width = 15, height = 20, 
        units = "cm", dpi = 300)
 
@@ -1083,12 +1091,14 @@ AgeVsDist
 # Save the plot
 ggsave(filename = "Figure 5.tiff",
        plot = AgeVsDist,
-       path = "D:/work stuff/ATBC/Manuscript Submission",
+       path = "your folder",
        width = 20, height = 15, units = "cm", dpi = 300)
 
 ####################################################################################################################################################################################
 
-##################### -------------------- #4. Age Distance interaction effect --------------------- ##########################
+#8. Table 1: Interaction terms table
+
+#Create linear models for biodiversity metrics
 
 lmTotalRichAgeDist <- lm(total_richness_fallow ~ fallow_age * log10(fallow_distance) )
 summary(lmTotalRichAgeDist)
@@ -1118,9 +1128,11 @@ model_AgeDist <- list(
   lmTotalCoverAgeDist, lmNativeCoverAgeDist, lmNonNativeCoverAgeDist,
   lmComDisAgeDist)
 
+#export table
+
 stargazer(model_AgeDist, 
           type = "html",                    
-          out = "Table S2.doc", 
+          out = "Table 1.doc", 
           report = "vcsp*",                 
           digits = 3,                       
           single.row = TRUE,              
@@ -1133,3 +1145,5 @@ stargazer(model_AgeDist,
           keep.stat = c("rsq"), # Only keeps R2
           notes.append = FALSE,      # Helps in removing the default note
           notes = "")
+
+####################################################################################################################################################################################
