@@ -1,4 +1,4 @@
-#This file contains all codes for article titled: Spatial isolation slows biodiversity recovery more than frequent recultivation in post-agricultural tropical savannahs
+#This file contains all codes for article titled: Spatial isolation slows the recovery of savannah biodiversity more than frequent cultivation in agricultural fallows.
 
 #Contents
 
@@ -1052,14 +1052,14 @@ AgeVsDist <- ggplot(data = data_fallow,
                         fill = dissim_fallow)) +
   
   # Horizontal Lines Fallow Age
-  geom_hline(yintercept = log10(14.22), linetype = "dashed", color = "black", linewidth = 0.7) + #Global average time of recultivation (years)
-  geom_hline(yintercept = log10(5), linetype = "dashed", color = "black", linewidth = 0.7) + #India-level time of recultivation
-  
-  # Vertical Lines Distances 
-  geom_vline(xintercept = log10(1.757), linetype = "dashed", color = "black", linewidth = 0.7) + #Herbs-ballistic 95th #3
-  geom_vline(xintercept = log10(17.91), linetype = "dashed", color = "black", linewidth = 0.7) + #Tall wind-dispersed herbs 95th #4
-  geom_vline(xintercept = log10(45.93), linetype = "dashed", color = "black", linewidth = 0.7) + #Tall graminoids median #5
-  geom_vline(xintercept = log10(123.3), linetype = "dashed", color = "black", linewidth = 0.7) + #Tall graminoids 95th #6
+  # geom_hline(yintercept = log10(14.22), linetype = "dashed", color = "black", linewidth = 0.7) + #Global average time of recultivation (years)
+  # geom_hline(yintercept = log10(5), linetype = "dashed", color = "black", linewidth = 0.7) + #India-level time of recultivation
+  # 
+  # # Vertical Lines Distances 
+  # geom_vline(xintercept = log10(1.757), linetype = "dashed", color = "black", linewidth = 0.7) + #Herbs-ballistic 95th #3
+  # geom_vline(xintercept = log10(17.91), linetype = "dashed", color = "black", linewidth = 0.7) + #Tall wind-dispersed herbs 95th #4
+  # geom_vline(xintercept = log10(45.93), linetype = "dashed", color = "black", linewidth = 0.7) + #Tall graminoids median #5
+  # geom_vline(xintercept = log10(123.3), linetype = "dashed", color = "black", linewidth = 0.7) + #Tall graminoids 95th #6
   
   geom_point(shape = 21,    
              size = 8, 
@@ -1100,25 +1100,25 @@ ggsave(filename = "Figure 5.tiff",
 
 #Create linear models for biodiversity metrics
 
-lmTotalRichAgeDist <- lm(total_richness_fallow ~ fallow_age * log10(fallow_distance) )
+lmTotalRichAgeDist <- lm(total_richness_fallow ~ age_fallow * log10(dist_fallow) )
 summary(lmTotalRichAgeDist)
 
-lmNativeRichAgeDist <- lm(native_richness_fallow ~ fallow_age * log10(fallow_distance))
+lmNativeRichAgeDist <- lm(native_richness_fallow ~ age_fallow * log10(dist_fallow))
 summary(lmNativeRichAgeDist)
 
-lmNonNativeRichAgeDist <- lm(non.native_richness_fallow ~ fallow_age * log10(fallow_distance))
+lmNonNativeRichAgeDist <- lm(non.native_richness_fallow ~ age_fallow * log10(dist_fallow))
 summary(lmNonNativeRichAgeDist)
 
-lmTotalCoverAgeDist <- lm(total_cover_fallow ~ fallow_age * log10(fallow_distance))
+lmTotalCoverAgeDist <- lm(total_cover_fallow ~ age_fallow * log10(dist_fallow))
 summary(lmTotalCoverAgeDist)
 
-lmNativeCoverAgeDist <- lm(native_cover_fallow ~ fallow_age * log10(fallow_distance))
+lmNativeCoverAgeDist <- lm(native_cover_fallow ~ age_fallow * log10(dist_fallow))
 summary(lmNativeCoverAgeDist)
 
-lmNonNativeCoverAgeDist <- lm(non.native_cover_fallow ~ fallow_age * log10(fallow_distance))
+lmNonNativeCoverAgeDist <- lm(non.native_cover_fallow ~ age_fallow * log10(dist_fallow))
 summary(lmNonNativeCoverAgeDist)
 
-lmComDisAgeDist <- lm(compDis_fallow ~ fallow_age * log10(fallow_distance))
+lmComDisAgeDist <- lm(dissim_fallow ~ age_fallow * log10(dist_fallow))
 summary(lmComDisAgeDist)
 
 #Now, create list of all models and name them
