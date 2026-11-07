@@ -3,8 +3,6 @@
 Article Title: Spatial isolation slows biodiversity recovery more than frequent recultivation in post-agricultural tropical savannahs
 ========================================================================
 
-Journal Name: Proceedings of the Royal Society B: Biological Sciences
-
 **This repository contains the raw data and R code associated with the article listed above. This allows for full reproduction of statistical analyses done for the study.
 
 ------------------------------------------------------------------------
